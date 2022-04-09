@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         searchMoviesBtn.setOnClickListener {
             startActivity(Intent(this,SearchForMovies::class.java))
         }
+        searchActorsBtn.setOnClickListener {
+            startActivity(Intent(this,SearchMoviesByActorName::class.java))
+        }
 
     }
 
@@ -115,10 +118,7 @@ class MainActivity : AppCompatActivity() {
                 "Elijah Wood, Viggo Mortensen, Ian McKellen",
                 "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring." ))
 
-
-        val data = database.moviesDAO().getMovies("Wood")
         Toast.makeText(this,"Movies Added to The DataBase",Toast.LENGTH_LONG).show()
-        Toast.makeText(this,data.toString(),Toast.LENGTH_LONG).show()
 
 
     }

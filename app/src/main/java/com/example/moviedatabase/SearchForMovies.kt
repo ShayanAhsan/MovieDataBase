@@ -62,6 +62,8 @@ class SearchForMovies : AppCompatActivity() {
     }
 
     private fun initializeView() {
+
+
         editTextSearchForMovies = findViewById(R.id.EditTextSearchForMovies)
         button = findViewById(R.id.button2)
         tvTitle = findViewById(R.id.tvTitle)
@@ -98,7 +100,7 @@ class SearchForMovies : AppCompatActivity() {
                         tvWriter.text = response.body()?.Writer
                         tvActors.text = response.body()?.Actors
                         tvPlots.text = response.body()?.Plot
-                        }else{
+                        }else if (condition==false){
                             tvTitle.text = ""
                             tvYear.text = ""
                             tvRated.text = ""
@@ -114,7 +116,6 @@ class SearchForMovies : AppCompatActivity() {
                         }
 
 
-//                        Toast.makeText(this@SearchForMovies,list.toString(),Toast.LENGTH_LONG).show()
                     }else{
                         Toast.makeText(this@SearchForMovies,"Some Thing Went Wrong",Toast.LENGTH_LONG).show()
 
@@ -124,7 +125,18 @@ class SearchForMovies : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<MoviesDetailsModel>, t: Throwable) {
-                    Toast.makeText(this@SearchForMovies,"Failed",Toast.LENGTH_LONG).show()
+
+                    tvTitle.text = ""
+                    tvYear.text = ""
+                    tvRated.text = ""
+                    tvReleased.text = ""
+                    tvRunTime.text = ""
+                    tvGenre.text = ""
+                    tvDirector.text = ""
+                    tvWriter.text = ""
+                    tvActors.text = ""
+                    tvPlots.text = ""
+                    Toast.makeText(this@SearchForMovies,"Server is not responding ",Toast.LENGTH_LONG).show()
                 }
 
             })
@@ -132,12 +144,22 @@ class SearchForMovies : AppCompatActivity() {
     }
 
     private fun addToTheDataBase(){
-        if (tvTitle.text.toString().isEmpty()&&tvYear.text.toString().isEmpty()&&tvRated.text.toString().isEmpty()&&tvReleased.text.toString().isEmpty()&&
+
+        
+        if (editTextSearchForMovies.text.toString().isEmpty()){
+            Toast.makeText(this,"Please Search Movie First ",Toast.LENGTH_LONG).show()
+
+        }
+
+
+        else if (tvTitle.text.toString().isEmpty()&&tvYear.text.toString().isEmpty()&&tvRated.text.toString().isEmpty()&&tvReleased.text.toString().isEmpty()&&
             tvRunTime.text.toString().isEmpty()&&tvGenre.text.toString().isEmpty()&&tvDirector.text.toString().isEmpty()&&tvWriter.text.toString().isEmpty()&&
             tvActors.text.toString().isEmpty()&&tvPlots.text.toString().isEmpty())
         {
             Toast.makeText(this,"Movie Not Found",Toast.LENGTH_LONG).show()
-        }else{
+        }
+
+        else{
 
 
             database = Room.databaseBuilder(applicationContext,MoviesDatabase::class.java,"MoviesDB").allowMainThreadQueries().build()
@@ -146,11 +168,9 @@ class SearchForMovies : AppCompatActivity() {
                 MoviesModel( tvTitle.text.toString(), tvYear.text.toString(), tvRated.text.toString(),
                     tvReleased.text.toString(),tvRunTime.text.toString(), tvGenre.text.toString(),tvDirector.text.toString(),tvWriter.text.toString(),
                     tvActors.text.toString(),tvPlots.text.toString()
-                ))
 
-            val data = database.moviesDAO().getMovies("Chris")
-            Toast.makeText(this,"Movies Added to The DataBase",Toast.LENGTH_LONG).show()
-            Toast.makeText(this,data.toString(),Toast.LENGTH_LONG).show()
+                ))
+            Toast.makeText(this,"Movie Added to the Database",Toast.LENGTH_LONG).show()
         }
 
 
