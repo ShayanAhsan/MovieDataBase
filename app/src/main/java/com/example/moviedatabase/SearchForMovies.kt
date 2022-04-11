@@ -83,6 +83,14 @@ class SearchForMovies : AppCompatActivity() {
 
     private fun callApi() {
 
+
+        if(editTextSearchForMovies.text.toString().isBlank()){
+            Toast.makeText(this,"Please Enter Movie Name First ",Toast.LENGTH_LONG).show()
+
+        }else{
+
+
+
         MyRetrofit.getClint().searchMovie(editTextSearchForMovies.text.toString(),"7ee3ed9")
             .enqueue(object : Callback<MoviesDetailsModel>{
                 override fun onResponse(call: Call<MoviesDetailsModel>, response: Response<MoviesDetailsModel>) {
@@ -140,21 +148,21 @@ class SearchForMovies : AppCompatActivity() {
                 }
 
             })
-
+        }
     }
 
     private fun addToTheDataBase(){
 
         
-        if (editTextSearchForMovies.text.toString().isEmpty()){
+        if (editTextSearchForMovies.text.toString().isBlank()){
             Toast.makeText(this,"Please Search Movie First ",Toast.LENGTH_LONG).show()
 
         }
 
 
-        else if (tvTitle.text.toString().isEmpty()&&tvYear.text.toString().isEmpty()&&tvRated.text.toString().isEmpty()&&tvReleased.text.toString().isEmpty()&&
-            tvRunTime.text.toString().isEmpty()&&tvGenre.text.toString().isEmpty()&&tvDirector.text.toString().isEmpty()&&tvWriter.text.toString().isEmpty()&&
-            tvActors.text.toString().isEmpty()&&tvPlots.text.toString().isEmpty())
+        else if (tvTitle.text.toString().isBlank()&&tvYear.text.toString().isBlank()&&tvRated.text.toString().isBlank()&&tvReleased.text.toString().isBlank()&&
+            tvRunTime.text.toString().isBlank()&&tvGenre.text.toString().isBlank()&&tvDirector.text.toString().isBlank()&&tvWriter.text.toString().isBlank()&&
+            tvActors.text.toString().isBlank()&&tvPlots.text.toString().isBlank())
         {
             Toast.makeText(this,"Movie Not Found",Toast.LENGTH_LONG).show()
         }
